@@ -1,0 +1,11 @@
+encrypt:
+  key: zhaohg
+  key-store:
+    location: classpath:keystore.jks
+    alias: config-server
+    password: zhoahg
+    secret: zhaohg
+    type: jks
+
+
+

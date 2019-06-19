@@ -1,0 +1,69 @@
+server:
+  port: 9002
+  context-path: /
+clientId: 272ECDB5503B4B444B9D6549DABEE3AF
+spring:
+  application:
+    name: wxmp-manager
+  #  zipkin:
+  #    base-url: http://127.0.0.1:7000
+  sleuth:
+    sampler:
+      percentage: 1.0  #0.1-1.0 也就是代表链路跟踪的数据上传的概率有多大
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/wxmp?characterEncoding=utf-8&useUnicode=true&useSSL=false
+    username: root
+    password: mysql
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      max-wait: 5000
+      max-active: 500
+      max-total: 500
+  redis:
+    host: 127.0.0.1
+    password:
+    database: 0
+    port: 6379
+    timeout: 3000
+    pool:
+      max-idle: 500
+      min-idle: 50
+mybatis:
+  type-aliases-package: com.wxmp.oauth2.entity
+logging:
+  config: classpath:logback-spring.xml
+jwt:
+  header: Authorization
+#restTemplate:
+#  url: http://192.168.0.71:7080
+eureka:
+  client:
+    enabled: true
+    # 开启健康检查（依赖spring-boot-starter-actuator）
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+    # 默认为30秒
+    registry-fetch-interval-seconds: 5
+  instance:
+    # 发呆时间，即服务续约到期时间（缺省为90s）
+    lease-expiration-duration-in-seconds: 15
+    # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-renewal-interval-in-seconds: 5
+    # 注册是否显示IP地址
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+    #    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+    #    appname: ${spring.application.name}
+    metadata-map:
+      username: zhangsan
+      addr: myAddr
+    health-check-url-path: ${server.servlet.context-path}/health
+    status-page-url-path: ${server.servlet.context-path}/swagger-ui.html
+

@@ -1,0 +1,55 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: config
+  rabbitmq:
+    addresses: localhost
+    port: 5672
+    username: guest
+    password: guest
+  cloud:
+    config:
+      label: master
+      server:
+        #default-application-name: @pom.artifactId@
+        git:
+          uri: https://github.com/zhaohg/wxmp.server.git
+          search-paths: config
+          #username: zhaohgang0927@163.com
+          #password:
+          strictHostKeyChecking: true
+          host-key: zhaohgang0927@163.com
+          host-key-algorithm: ssh-rsa
+          private-key: /Users/zhaohg/.ssh/id_rsa
+        #native.search-locations: classpath:properties/ # src/main/resource 下的properties文件夹下的文件
+
+logging:
+  level:
+    com.netflix.discovery: 'ON'
+    org.springframework.cloud: 'DEBUG'
+  config: classpath:logback-spring.xml
+
+eureka:
+  client:
+    enabled: true
+    registry-fetch-interval-seconds: 5 # 默认为30秒
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    metadata-map:
+      username: zhangsan
+      addr: myAddr
+    health-check-url-path: ${server.servlet.context-path}/health
+    status-page-url-path: ${server.servlet.context-path}/info
+    lease-expiration-duration-in-seconds: 15
+    lease-renewal-interval-in-seconds: 5
+    prefer-ip-address: true
+
+

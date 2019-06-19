@@ -1,0 +1,21 @@
+server:
+  port: 8888
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/wxmp?characterEncoding=utf-8&useUnicode=true&useSSL=false
+    username: root
+    password: mysql
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      max-active: 100
+      min-idle: 5
+      max-wait: 5000
+
+  redis:
+    host: localhost
+    password:
+    database: 0
+    port: 6379
+    timeout: 1000000
+mybatis:
+  type-aliases-package: com.chinaoly.core.entity

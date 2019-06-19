@@ -1,0 +1,43 @@
+server:
+  port: 8006
+  servlet:
+    context-path: /
+spring:
+  application:
+    name: zuul
+
+zuul:
+  ignoredServices: '*' #忽略所有未配置的service
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
+  routes:
+    api-a: #自定义名称
+      service-id: manager #/api-a/开头的路径转发至manager微服务
+      path: /api-a/**
+    api-b: #自定义名称
+      service-id: front
+      path: /api-b/** #/api-b/开头的路径转发至front微服务
+    oauth2:
+      path: /oauth2/**
+      strip-prefix: true
+      sensitiveHeaders:
+      serviceId: oauth
+eureka:
+  client:
+    enabled: true
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registry-fetch-interval-seconds: 5 # 默认为30秒
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    metadata-map:
+      username: zhangsan
+      addr: myAddr
+    health-check-url-path: ${server.servlet.context-path}/health
+    status-page-url-path: ${server.servlet.context-path}/info
+    lease-expiration-duration-in-seconds: 15
+    lease-renewal-interval-in-seconds: 5
+    prefer-ip-address: true

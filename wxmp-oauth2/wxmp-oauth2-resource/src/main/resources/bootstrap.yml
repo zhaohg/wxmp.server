@@ -1,0 +1,8 @@
+#spring:
+#  application:
+#    name: oauth2
+#  cloud:
+#    config:
+#      label: wxmp
+#      profile: dev
+#      uri: http://localhost:8888/

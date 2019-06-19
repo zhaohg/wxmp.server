@@ -1,0 +1,50 @@
+server:
+  port: 7005
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      filter:
+        remove-hop-by-hop:
+          headers:
+            - dummy
+      routes:
+        - id:  apiuser
+          # 重点！/info必须使用http进行转发，lb代表从注册中心获取服务
+          uri: lb://user
+          predicates:
+            # 重点！转发该路径！,/userapi/**,
+            - Path=/userapi/**
+          # http://localhost:6601/userapi/user/users/2, 必须加上StripPrefix=1，否则访问服务时会带上userapi
+          #而不是我们期望的去掉userapi，只保留**部分
+          filters:
+            - StripPrefix=1
+        - id:  api2user
+          uri: lb://user
+          predicates:
+            - Path=/userapi2/**
+          filters:
+            - StripPrefix=1
+
+eureka:
+  client:
+    enabled: true
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registry-fetch-interval-seconds: 5 # 默认为30秒
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    metadata-map:
+      username: zhangsan
+      addr: myAddr
+    health-check-url-path: ${server.servlet.context-path}/health
+    status-page-url-path: ${server.servlet.context-path}/info
+    lease-expiration-duration-in-seconds: 15
+    lease-renewal-interval-in-seconds: 5
+    prefer-ip-address: true

@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2019/06/19.
  */
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserService userService;
     
-    @GetMapping("findByUsername/{username}")
+    @GetMapping("/findByUsername/{username}")
     public Result findByUsername(@PathVariable("username") String username) {
         SysUser user = userService.findByUsername(username);
         if (user == null) {

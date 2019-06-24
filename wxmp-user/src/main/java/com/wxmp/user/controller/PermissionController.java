@@ -18,13 +18,13 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("permission")
+@RequestMapping("/permission")
 public class PermissionController {
     
     @Autowired
     private PermissionService permissionService;
     
-    @GetMapping("getRolePermission/{roleId}")
+    @GetMapping("/getRolePermission/{roleId}")
     public Result getRolePermission(@PathVariable("roleId") Integer roleId) {
         List<SysMenu> menuList = permissionService.getPermissionsByRoleId(roleId);
         return Result.ok().setData(menuList);

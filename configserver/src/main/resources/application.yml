@@ -5,7 +5,7 @@ server:
 
 spring:
   application:
-    name: config
+    name: wxmp-config
   rabbitmq:
     addresses: localhost
     port: 5672
@@ -30,7 +30,7 @@ spring:
 logging:
   level:
     com.netflix.discovery: 'ON'
-    org.springframework.cloud: 'DEBUG'
+    org.springframework.cloud: 'info'
   config: classpath:logback-spring.xml
 
 eureka:
@@ -42,7 +42,7 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
   instance:
-    instance-id: ${spring.application.name}:${server.port}
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
     metadata-map:
       username: zhangsan
       addr: myAddr

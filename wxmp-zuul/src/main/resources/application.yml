@@ -4,7 +4,7 @@ server:
     context-path: /
 spring:
   application:
-    name: zuul
+    name: wxmp-zuul
 
 zuul:
   ignoredServices: '*' #忽略所有未配置的service
@@ -19,10 +19,11 @@ zuul:
       service-id: front
       path: /api-b/** #/api-b/开头的路径转发至front微服务
     oauth2:
-      path: /oauth2/**
+      serviceId: oauth
+      path: /oauth/**
       strip-prefix: true
       sensitiveHeaders:
-      serviceId: oauth
+
 eureka:
   client:
     enabled: true
@@ -32,7 +33,7 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
     registry-fetch-interval-seconds: 5 # 默认为30秒
   instance:
-    instance-id: ${spring.application.name}:${server.port}
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
     metadata-map:
       username: zhangsan
       addr: myAddr

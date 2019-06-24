@@ -19,8 +19,6 @@
         <module>wxmp-manager</module>
         <module>wxmp-shell</module>
         <module>wxmp-front</module>
-<!--        <module>wxmp-oauth2</module>-->
-<!--        <module>wxmp-user</module>-->
         <module>wxmp-gateway</module>
         <module>wxmp-zipkin</module>
         <module>wxmp-zuul</module>
@@ -73,8 +71,8 @@
         <!--kafka版本 -->
         <!--        <kafka-client.version>1.2.2.RELEASE</kafka-client.version>-->
 
-
     </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -340,6 +338,7 @@
                     <include>**/*.yml</include>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
+                    <include>**/*.html</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>

@@ -34,7 +34,7 @@ spring:
       max-idle: 500
       min-idle: 50
 mybatis:
-  type-aliases-package: com.wxmp.oauth2.entity
+  type-aliases-package: com.wxmp.oauth.entity
 logging:
   config: classpath:logback-spring.xml
 jwt:
@@ -58,9 +58,8 @@ eureka:
     lease-renewal-interval-in-seconds: 5
     # 注册是否显示IP地址
     prefer-ip-address: true
-    instance-id: ${spring.application.name}:${server.port}
-    #    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
-    #    appname: ${spring.application.name}
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+
     metadata-map:
       username: zhangsan
       addr: myAddr

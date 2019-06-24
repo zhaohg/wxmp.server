@@ -4,7 +4,7 @@ server:
     context-path: /
 spring:
   application:
-    name: front
+    name: wxmp-front
   http:
     encoding:
       force: true
@@ -66,9 +66,8 @@ eureka:
     lease-renewal-interval-in-seconds: 5
     # 注册是否显示IP地址
     prefer-ip-address: true
-    instance-id: ${spring.application.name}:${server.port}
-    #    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
-    #    appname: ${spring.application.name}
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+
     metadata-map:
       username: zhangsan
       addr: myAddr

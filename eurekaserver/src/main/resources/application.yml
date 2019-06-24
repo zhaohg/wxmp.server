@@ -3,12 +3,12 @@ server:
 
 spring:
   application:
-    name: eureka
+    name: wxmp-eureka
 
 eureka:
   instance:
     hostname: localhost
-    instance-id: ${spring.application.name}:${server.port}
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
   client:
     register-with-eureka: false
     fetch-registry: false

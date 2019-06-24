@@ -5,7 +5,7 @@ server:
 
 spring:
   application:
-    name: gateway
+    name: wxmp-gateway
   cloud:
     gateway:
       filter:
@@ -30,6 +30,14 @@ spring:
           filters:
             - StripPrefix=1
 
+zuul:
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 60000
+  routes:
+    uaa:
+      sensitiveHeaders:
+
 eureka:
   client:
     enabled: true
@@ -39,7 +47,7 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
     registry-fetch-interval-seconds: 5 # 默认为30秒
   instance:
-    instance-id: ${spring.application.name}:${server.port}
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
     metadata-map:
       username: zhangsan
       addr: myAddr

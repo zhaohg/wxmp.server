@@ -1,6 +1,6 @@
 spring:
   application:
-    name: Gateway
+    name: wxmp-zuul
   zipkin:
     base-url: http://10.10.8.2:9050
 server:

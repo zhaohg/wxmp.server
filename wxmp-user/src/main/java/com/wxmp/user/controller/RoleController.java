@@ -17,13 +17,13 @@ import java.util.List;
  * @date 2019/06/19.
  */
 @RestController
-@RequestMapping("role")
+@RequestMapping("/role")
 public class RoleController {
     
     @Autowired
     private RoleService roleService;
     
-    @GetMapping("getRoleByUserId/{userId}")
+    @GetMapping("/getRoleByUserId/{userId}")
     public Result getRoleByUserId(@PathVariable("userId") Integer userId) {
         List<SysRole> roleList = roleService.getRoleByUserId(userId);
         return Result.ok().setData(roleList);

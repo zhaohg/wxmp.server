@@ -4,7 +4,7 @@ server:
     context-path: /
 spring:
   application:
-    name: manager
+    name: wxmp-manager
   http:
     encoding:
       force: true
@@ -45,6 +45,16 @@ spring:
 mybatis:
   type-aliases-package: com.wxmp.manager.entity
 
+security:
+  oauth2:
+    client:
+      accessTokenUri: http://10.0.0.84:8500/oauth/token
+      userAuthorizationUri: http://10.0.0.84:8500/oauth/authorize
+      clientId: webapp
+      clientSecret: 123456
+    resource:
+      userInfoUri: http://localhost:9000/api/user
+
 #jwt:
 #  header: Authorization
 #restTemplate:
@@ -65,9 +75,8 @@ eureka:
     lease-renewal-interval-in-seconds: 5
     # 注册是否显示IP地址
     prefer-ip-address: true
-    instance-id: ${spring.application.name}:${server.port}
-    #    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
-    #    appname: ${spring.application.name}
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+
     metadata-map:
       username: zhangsan
       addr: myAddr

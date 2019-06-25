@@ -40,13 +40,13 @@ public class ResControllerTest {
      */
     //@Before
     //public void getToken() throws Exception {
-    //    LoginDTO loginDTO = new LoginDTO();
-    //    loginDTO.setUsername("linyuan");
-    //    loginDTO.setPassword("123456");
+    //    LoginEntity entity = new LoginEntity();
+    //    entity.setUsername("admin");
+    //    entity.setPassword("123456");
     //
     //    byte[] body = this.mockMvc.perform(
     //            post("/login")
-    //                    .content(objectMapper.writeValueAsBytes(loginDTO))
+    //                    .content(objectMapper.writeValueAsBytes(entity))
     //                    .contentType(MediaType.APPLICATION_JSON)    //请求数据的格式
     //                    .accept(MediaType.APPLICATION_JSON)         //接收返回数据的格式
     //    ).andExpect(status().isOk())

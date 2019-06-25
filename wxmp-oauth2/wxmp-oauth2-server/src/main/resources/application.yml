@@ -39,9 +39,11 @@ spring:
   main:
     allow-bean-definition-overriding: true
   thymeleaf:
-    prefix: classpath:views
+    prefix: classpath:/views/
     suffix: .html
     cache: false
+    mode: LEGACYHTML5
+    encoding: UTF-8
 
 
 mybatis:
@@ -51,7 +53,8 @@ logging:
   level:
     org:
       springframework:
-        web: info
+        web: debug
+
 
 eureka:
   client:

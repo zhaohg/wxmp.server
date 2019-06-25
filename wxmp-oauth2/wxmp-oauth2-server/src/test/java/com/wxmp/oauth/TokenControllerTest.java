@@ -16,6 +16,7 @@ import org.springframework.util.MultiValueMap;
 
 import java.util.Base64;
 import java.util.Collections;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -62,10 +63,10 @@ public class TokenControllerTest {
                 log.info("密码授权模式获取令牌---------------->失败（400---请求失败，请检查密码是否正确）");
                 break;
             default:
-                log.info("密码授权模式获取令牌---------------->失败（{}---未知结果）",status);
+                log.info("密码授权模式获取令牌---------------->失败（{}---未知结果）", status);
                 break;
         }
-        Assert.assertEquals(status,HttpStatus.SC_OK);
+        Assert.assertEquals(status, HttpStatus.SC_OK);
     }
     
 }

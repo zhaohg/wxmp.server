@@ -16,13 +16,13 @@ import java.util.Map;
 @Controller
 public class LoginController {
     
-    @RequestMapping("/login")
+    @RequestMapping("/oauth/login")
     public String loginPage(Map<String, String> model) {
-        model.put("oauthLoginUrl", "/auth/authorize");
-        return "/login";
+        model.put("oauthLoginUrl", "/oauth/authorize");
+        return "login";
     }
     
-    @GetMapping("/login-error")
+    @GetMapping("/oauth/login-error")
     public ModelAndView loginError(HttpServletRequest request, Model model) {
         model.addAttribute("loginError", true);
         model.addAttribute("errorMsg", "登陆失败，账号或者密码错误！");

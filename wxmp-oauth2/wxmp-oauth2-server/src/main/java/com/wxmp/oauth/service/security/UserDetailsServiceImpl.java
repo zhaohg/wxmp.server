@@ -6,8 +6,7 @@ import com.wxmp.common.vo.MenuVo;
 import com.wxmp.common.vo.Result;
 import com.wxmp.common.vo.RoleVo;
 import com.wxmp.common.vo.UserVo;
-import com.wxmp.oauth.service.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.wxmp.oauth.service.FeignUserService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -16,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,12 +27,8 @@ import java.util.Set;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     
-    @Autowired
-    private IUserService       userService;
-    //@Autowired
-    //private IPermissionService permissionService;
-    //@Autowired
-    //private IRoleService       roleService;
+    @Resource
+    private FeignUserService userService;
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -45,7 +41,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         boolean accountNonExpired = true; // 过期性 :true:没过期 false:过期
         boolean credentialsNonExpired = true; // 有效性 :true:凭证有效 false:凭证无效
         boolean accountNonLocked = true; // 锁定性 :true:未锁定 false:已锁定
-
+        
         UserVo userVo = JSONObject.parseObject(JSONObject.toJSONString(userResult.getData()), UserVo.class);
         
         Result<List<RoleVo>> roleResult = userService.getRoleByUserId(userVo.getId());
@@ -59,16 +55,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 Result<List<MenuVo>> perResult = userService.getRolePermission(role.getId());
                 if (perResult.getCode() != StatusCode.SUCCESS_CODE) {
                     List<MenuVo> permissionList = perResult.getData();
-                    for (MenuVo menu : permissionList
-                    ) {
+                    for (MenuVo menu : permissionList) {
                         GrantedAuthority authority = new SimpleGrantedAuthority(menu.getCode());
                         grantedAuthorities.add(authority);
                     }
                 }
             }
         }
-        User user = new User(userVo.getUsername(), userVo.getPassword(),
-                enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, grantedAuthorities);
+        User user = new User(userVo.getUsername(), userVo.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, grantedAuthorities);
         return user;
     }
 }

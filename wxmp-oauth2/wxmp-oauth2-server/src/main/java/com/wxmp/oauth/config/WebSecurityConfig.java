@@ -1,6 +1,5 @@
-package com.wxmp.oauth.config.auth;
+package com.wxmp.oauth.config;
 
-import com.wxmp.oauth.config.Md5PasswordEncoder;
 import com.wxmp.oauth.service.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -55,7 +54,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()//定义哪些url需要被保护  哪些不需要保护
+        http.requestMatchers()
+                .antMatchers("/oauth/login", "/oauth/authorize")
+                .and()
+                .authorizeRequests()//定义哪些url需要被保护  哪些不需要保护
                 //.antMatchers("/oauth/token" , "/oauth/check_token").permitAll()//定义这两个链接不需要登录可访问
                 .antMatchers("/**").permitAll() //定义所有的都不需要登录  目前是测试需要
                 .anyRequest().authenticated() //其他的都需要登录
@@ -63,11 +65,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 //.failureHandler(handler)
-                .loginPage("/login").failureUrl("/login-error")
-                .loginProcessingUrl("/oauth/authorize")//如果未登录则跳转登录的页面   这儿可以控制登录成功和登录失败跳转的页面
-                .usernameParameter("username").passwordParameter("password").permitAll()//定义号码与密码的parameter
-                .and()
-                .csrf().disable();//防止跨站请求  spring security中默认开启
+                .loginPage("/oauth/login")//.failureUrl("/oauth/login-error")
+                .loginProcessingUrl("/oauth/authorize");//如果未登录则跳转登录的页面   这儿可以控制登录成功和登录失败跳转的页面
+                //.usernameParameter("username").passwordParameter("password").permitAll()//定义号码与密码的parameter
+                //.and()
+                //.csrf().disable();//防止跨站请求  spring security中默认开启
+        http.httpBasic().disable();
     }
     
     @Override

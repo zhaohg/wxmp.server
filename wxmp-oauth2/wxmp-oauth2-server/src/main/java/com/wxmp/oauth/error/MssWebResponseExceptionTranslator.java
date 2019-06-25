@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.common.exceptions.InsufficientScopeEx
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
 import org.springframework.security.web.util.ThrowableAnalyzer;
+import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.io.IOException;
  * @author zhaohg
  * @date 2019/06/19.
  */
+@Component
 public class MssWebResponseExceptionTranslator implements WebResponseExceptionTranslator<OAuth2Exception> {
     
     private ThrowableAnalyzer throwableAnalyzer = new DefaultThrowableAnalyzer();

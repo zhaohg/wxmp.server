@@ -16,6 +16,7 @@
     <modules>
         <module>wxmp-oauth2-server</module>
         <module>wxmp-oauth2-resource</module>
+        <module>wxmp-oauth2-client</module>
     </modules>
 
 </project>

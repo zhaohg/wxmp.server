@@ -16,35 +16,31 @@ import java.util.Map;
  * @date 2019/06/21.
  */
 @Controller
-// 必须配置
-@SessionAttributes("authorizationRequest")
+@SessionAttributes({"authorizationRequest"})// 必须配置
 public class GrantController {
     
     @RequestMapping("/oauth/confirm_access")
-    public ModelAndView getAccessConfirmation(Map<String, Object> model,
-                                              HttpServletRequest request) throws Exception {
-    
-        AuthorizationRequest authorizationRequest = (AuthorizationRequest) model
-                .get("authorizationRequest");
-    
-        ModelAndView view = new ModelAndView("/grant");
+    public ModelAndView getAccessConfirmation(Map<String, Object> model, HttpServletRequest request) throws Exception {
+        AuthorizationRequest authorizationRequest = (AuthorizationRequest) model.get("authorizationRequest");
+        ModelAndView view = new ModelAndView("grant");
         view.addObject("clientId", authorizationRequest.getClientId());
-        view.addObject("scope", authorizationRequest.getScope().toArray()[0]);
-    
+        view.addObject("scopes", authorizationRequest.getScope());
+        
         return view;
     }
     
-    @RequestMapping({ "/oauth/error" })
-    public String handleError(Map<String, Object> model, HttpServletRequest request) {
+    @RequestMapping({"/oauth/error"})
+    public ModelAndView handleError(Map<String, Object> model, HttpServletRequest request) {
         Object error = request.getAttribute("error");
-        String errorSummary;
+        String errorMsg;
         if (error instanceof OAuth2Exception) {
             OAuth2Exception oauthError = (OAuth2Exception) error;
-            errorSummary = HtmlUtils.htmlEscape(oauthError.getSummary());
+            errorMsg = HtmlUtils.htmlEscape(oauthError.getSummary());
         } else {
-            errorSummary = "Unknown error";
+            errorMsg = "Unknown error";
         }
-        model.put("errorSummary", errorSummary);
-        return "/error";
+        ModelAndView view = new ModelAndView("error");
+        view.addObject("errorMsg", errorMsg);
+        return view;
     }
 }

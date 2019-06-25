@@ -15,7 +15,7 @@ public class Person {
     private String peter;
     private String beijing;
     private String china;
-    private int i;
+    private int    i;
     private String mal;
     
 }

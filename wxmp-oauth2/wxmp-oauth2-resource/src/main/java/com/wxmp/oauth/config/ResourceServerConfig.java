@@ -1,4 +1,4 @@
-package com.wxmp.oauth.config.auth;
+package com.wxmp.oauth.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,7 +35,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         tokenService.setCheckTokenEndpointUrl(URL);
         tokenService.setClientId("webapp");
         tokenService.setClientSecret("123456");
-    
+        
         resources.tokenServices(tokenService);
         super.configure(resources);
     }

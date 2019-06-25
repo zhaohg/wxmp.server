@@ -1,6 +1,8 @@
-package com.wxmp.oauth.config.auth;
+package com.wxmp.oauth.config;
 
 import com.wxmp.oauth.error.MssWebResponseExceptionTranslator;
+import com.wxmp.oauth.filter.AuthorizationFilter;
+import com.wxmp.oauth.service.security.ClientDetailServiceImpl;
 import com.wxmp.oauth.service.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -39,12 +41,22 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private AuthenticationManager authenticationManager;
     
     @Autowired
-    private DataSource             dataSource;
+    private DataSource dataSource;
+    
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private UserDetailsServiceImpl          userDetailsService;//user
+    //private UserDetailsService userDetailsService;
+    //@Autowired
+    //private AuthorizationCodeServiceImpl authorizationCodeService;//authorization
+    @Autowired
+    private ClientDetailServiceImpl         clientDetailsService;//client
+    //private ClientDetailsService    clientDetailsService;
     
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
+    
+    @Autowired
+    private AuthorizationFilter authorizationFilter;
     
     //redis 管理access_token和refresh_token
     @Bean
@@ -61,15 +73,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.withClientDetails(clientDetails());
-        //基于内存配置项
-        //clients.inMemory()
-        //.withClient("community")
-        //.secret("community")
-        //.authorizedGrantTypes("authorization_code").redirectUris("http://tech.taiji.com.cn/")
-        //.scopes("app").and() .withClient("dev")
-        //.secret("dev")
-        //.authorizedGrantTypes("authorization_code").redirectUris("http://localhost:7777/")
-        //.scopes("app");
     }
     
     @Bean
@@ -98,7 +101,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authenticationManager(authenticationManager);//开启密码授权类型
         endpoints.tokenStore(redisTokenStore());//配置token存储方式 一共有5种
-        endpoints.userDetailsService(userDetailsService);
+        //endpoints.userDetailsService(userDetailsService);
+        endpoints.setClientDetailsService(clientDetailsService);
+        //endpoints.authorizationCodeServices(authorizationCodeService);
         endpoints.tokenServices(defaultTokenServices());
         endpoints.exceptionTranslator(webResponseExceptionTranslator());//自定义登录或者鉴权失败时的返回信息
         //endpoints.tokenEnhancer(tokenSecurityEncoder());
@@ -106,6 +111,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         endpoints.approvalStore(approvalStore());
         // 用户信息查询服务
         endpoints.userDetailsService(userDetailsService);
+        // 最后一个参数为替换之后页面的url
+        //endpoints.pathMapping("/oauth/confirm_access", "/oauth/confirm_access");
     }
     
     //@Bean
@@ -135,20 +142,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        //配置oauth2服务跨域
-        //CorsConfigurationSource source = request -> {
-        //    CorsConfiguration corsConfiguration = new CorsConfiguration();
-        //    corsConfiguration.addAllowedHeader("*");
-        //    corsConfiguration.addAllowedOrigin(request.getHeader(HttpHeaders.ORIGIN));
-        //    corsConfiguration.addAllowedMethod("*");
-        //    corsConfiguration.setAllowCredentials(true);
-        //    corsConfiguration.setMaxAge(3600L);
-        //    return corsConfiguration;
-        //};
+        security.allowFormAuthenticationForClients();        // 允许表单登录
+        authorizationFilter.setClientDetailsService(clientDetailsService);        // 加载client的service
+        //security.authenticationEntryPoint(authenticationEntryPoint);        // 自定义异常处理端口
+        security.addTokenEndpointAuthenticationFilter(authorizationFilter);        // 客户端认证之前的过滤器
         
         security.tokenKeyAccess("permitAll()"); ///开启/oauth/token_key验证端口无权限访问
         security.checkTokenAccess("isAuthenticated()");// 开启/oauth/check_token验证端口认证权限访问
-        security.allowFormAuthenticationForClients();
-        //security.addTokenEndpointAuthenticationFilter(new CorsFilter(source));
     }
 }

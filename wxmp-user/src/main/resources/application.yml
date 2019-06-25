@@ -27,7 +27,7 @@ spring:
         max-interval: 2000            #最大重试时间，默认2000
         max-attempts: 3               #最大重试次数，默认6次
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/oauth?characterEncoding=utf-8&useUnicode=true&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/oauth2?characterEncoding=utf-8&useUnicode=true&useSSL=false
     username: root
     password: mysql
     druid:

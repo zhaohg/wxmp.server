@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
+ * 授权
  * @author zhaohg
  * @date 2019/06/21.
  */

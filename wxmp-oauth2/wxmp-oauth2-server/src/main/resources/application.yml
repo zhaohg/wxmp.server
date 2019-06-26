@@ -45,7 +45,6 @@ spring:
     mode: LEGACYHTML5
     encoding: UTF-8
 
-
 mybatis:
   type-aliases-package: com.wxmp.oauth.entity
 logging:
@@ -53,8 +52,7 @@ logging:
   level:
     org:
       springframework:
-        web: debug
-
+        web: info
 
 eureka:
   client:

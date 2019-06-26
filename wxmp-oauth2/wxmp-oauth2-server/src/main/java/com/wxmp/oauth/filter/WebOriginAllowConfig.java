@@ -1,4 +1,4 @@
-package com.wxmp.oauth.config;
+package com.wxmp.oauth.filter;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

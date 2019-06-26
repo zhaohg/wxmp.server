@@ -1,4 +1,4 @@
-package com.wxmp.oauth.config;
+package com.wxmp.oauth.service.security;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 

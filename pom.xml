@@ -34,7 +34,7 @@
         <!--汉字拼音转换包-->
         <pinyin4j.version>2.5.1</pinyin4j.version>
         <!--json工具包-->
-        <jackson-databind.version>2.9.8</jackson-databind.version>
+        <jackson-databind.version>2.9.10.3</jackson-databind.version>
         <jackson-mapper-asl.version>1.9.13</jackson-mapper-asl.version>
         <json-lib.version>2.4</json-lib.version>
         <fastjson.version>1.2.58</fastjson.version>

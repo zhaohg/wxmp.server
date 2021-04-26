@@ -45,7 +45,7 @@
         <jjwt.version>0.7.0</jjwt.version>
         <!--java的工具包-->
         <commons.version>3.4</commons.version>
-        <commons-io.version>2.5</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <guava.version>23.0</guava.version>
         <xml-jar.version>2.0</xml-jar.version>
         <!--        <es-jar.version>6.2.4</es-jar.version>-->

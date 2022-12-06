@@ -44,7 +44,7 @@
         <shiro.version>1.2.3</shiro.version>
         <jjwt.version>0.7.0</jjwt.version>
         <!--java的工具包-->
-        <commons.version>3.4</commons.version>
+        <commons.version>3.9.0</commons.version>
         <commons-io.version>2.5</commons-io.version>
         <guava.version>23.0</guava.version>
         <xml-jar.version>2.0</xml-jar.version>
